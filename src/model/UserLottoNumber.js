@@ -13,7 +13,13 @@ class UserLottoNumber {
 	}
 
 	calculateMatchingNumber(winningLotto) {
-		const winningLottoNumber = winningLotto.getLottoNumber();
-		return this.#lottoNumber.filter((number) => winningLottoNumber.includes(number));
+		const matchingNumbers = this.lottoNumber.filter((number) => winningLotto.getFullLottoNumbers().includes(number));
+		const bonusNumber = matchingNumbers.include(winningLotto.getBonusNumber());
+
+		if (matchingNumbers.length === 6) return 'first';
+		if (matchingNumbers.length === 5 && bonusNumber) return 'second';
+		if (matchingNumbers.length === 5) return 'third';
+		if (matchingNumbers.length === 4) return 'fourth';
+		if (matchingNumbers.length === 3) return 'fifth';
 	}
 }

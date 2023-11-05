@@ -1,31 +1,30 @@
 class Statistics {
-
+	#rateofreturns;
 	#statistics = [
-		{ rank: 'FIFTH',
-		message: MESSAGE.fifth,
+		{ rank: 'fifth',
 			winnings : 5000,
 			count: 0 
 		},
-		{ rank: 'FOURTH',
-			message: MESSAGE.fourth,
+		{ rank: 'fourth',
 			winnings : 50000,
 			count: 0 
 		},
-		{ rank: 'THIRD',
-			message: MESSAGE.third,
+		{ rank: 'third',
 			winnings : 1500000,
 			count: 0 
 		},
-		{ rank: 'SECOND',
-			message: MESSAGE.second,
+		{ rank: 'second',
 			winnings : 30000000,
 			count: 0 
 		},
-		{ rank: 'FIRST',
-			message: MESSAGE.first,
+		{ rank: 'first',
 			winnings : 2000000000,
 			count: 0 
 		}
 	];
+
+	#calculateRateOfReturns(purchaseAmount, totalWinnings) {
+		this.#rateofreturns = totalWinnings / purchaseAmount;
+	}
 
 }

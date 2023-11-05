@@ -38,16 +38,16 @@ class controller {
 	#setBonusNumber() {
 		const bonusNumber = this.#view.readBonusNumber();
 
-		this.#userLotto.setBonusNumber(bonusNumber);
+		this.#userLotto.setBonusNumber(Number(bonusNumber));
 		this.#calculateStatistics();
 	}
 
 	calculateStatistics() {
-		this.#statistics.calculateStatistics(this.#userLotto, this.#winningLotto);
-		this.printStatistics();
+		const result = this.#statistics.calculateStatistics(this.#userLotto, this.#winningLotto);
+		this.printStatistics(result);
 	}
 
-	printStatistics() {
+	printStatistics(result) {
 		this.#outputView.print();
 		this.#outputView.print()
 	}

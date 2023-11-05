@@ -7,8 +7,13 @@ class Lotto {
     this.#numbers = numbers;
   }
 
+  getFullLottoNumbers(){
+    return [...this.#numbers, this.#bonusNumber];
+  }
+
   setBonusNumber(bonusNumber) {
     this.#bonusValidate(bonusNumber);
+    this.#bonusNumber = bonusNumber;
   }
 
   #bonusValidate(bonusNumber) {
@@ -24,10 +29,12 @@ class Lotto {
   }
 
   #validate(numbers) {
-    this.#numberLengthCheck(numbers);
-    this.#numberTypeCheck(numbers);
-    this.#numberRangeCheck(numbers);
-    this.#numberDuplicateCheck(numbers);
+    const numbersToArray = Arrays.from(numbers.split(','), Number);
+  
+    this.#numberLengthCheck(numbersToArray);
+    this.#numberTypeCheck(numbersToArray);
+    this.#numberRangeCheck(numbersToArray);
+    this.#numberDuplicateCheck(numbersToArray);
   }
 
   #numberLengthCheck(numbers) {
