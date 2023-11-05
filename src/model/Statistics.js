@@ -23,8 +23,25 @@ class Statistics {
 		}
 	];
 
-	#calculateRateOfReturns(purchaseAmount, totalWinnings) {
-		this.#rateofreturns = totalWinnings / purchaseAmount;
+	#calculateStatistics(userLotto, winningLotto) {
+		const rankResult = userLotto.calculateMatchingNumber(winningLotto);
+
+		const totalWinnings = 0;
+	
+		this.#statistics.forEach((statistic) => {
+			statistic.count = rankResult[statistic.rank];
+			totalWinning += statistic.winnings * statistic.count;
+		});
+
+		this.#rateofreturns = totalWinning / userLotto.getPurchaseAmount();
+	}
+
+	getRateOfReturns() {
+		return this.#rateofreturns;
+	}
+
+	getStatistics() {
+		return this.#statistics;
 	}
 
 }

@@ -33,6 +33,23 @@ class PurchaseLotto {
 			this.#userLottoNumbers.push(new UserLottoNumber());
 		}
 	}
+
+	calculateMatchingNumber(winningLotto) {
+		const ranking = {
+			fifth: 0,
+			fourth: 0,
+			third: 0,
+			second: 0,
+			first: 0,
+		};
+
+		for(let i = 0; i < this.#numberOfPurchase; i++) {
+			const rank = this.#userLottoNumbers[i].calculateMatchingNumber(winningLotto);
+			ranking[rank] += 1;
+		}
+		return ranking;
+	}
+
 }
 
 export default PurchaseLotto;
