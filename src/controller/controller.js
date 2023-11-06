@@ -1,19 +1,20 @@
-import { UserLotto } from '../model/UserLotto.js';
-import { Lotto }  from '../model/lotto.js';
-import { Statistics } from '../model/statistics.js';
-import { InputView } from '../view/InputView.js';
+import  UserLotto  from '../model/UserLotto.js';
+import  Lotto   from '../model/lotto.js';
+import  Statistics  from '../model/statistics.js';
+import  InputView  from '../view/InputView.js';
+import  OutputView  from '../view/OutputView.js';
 
 class controller {
-	#view;
+	#inputView
+	#outputView
 	#userLotto;
 	#winningLotto;
 	#statistics;
 
 	constructor() {
 		this.#inputView = new InputView();
-		this.outputView = new OutputView();
+		this.#outputView = new OutputView();
 		this.#userLotto = new UserLotto();
-		this.#winningLotto = new Lotto();
 		this.#statistics = new Statistics();
 	}
 
@@ -21,34 +22,39 @@ class controller {
 		this.buyLotto();
 	}
 
-	buyLotto() {
-		const purchaseAmount = this.#view.readPurchaseAmount();
+	async buyLotto() {
+		const purchaseAmount = await this.#inputView.readPurchaseAmount();
 
-		this.#userLotto.buyLottos(purchaseAmount);
+		this.#userLotto.buyLotto(purchaseAmount);
 		this.setWinningLottoNumbers();
 	}
 
-	setWinningLottoNumbers() {
-		const lottoNumbers = this.#view.readLottoNumber();
+	async setWinningLottoNumbers() {
+		const lottoNumbers = await this.#inputView.readLottoNumber();
 
-		this.#userLotto.setWinningLottoNumbers(lottoNumbers);
+		this.#winningLotto = new Lotto(lottoNumbers);
 		this.#setBonusNumber();
 	}
 
-	#setBonusNumber() {
-		const bonusNumber = this.#view.readBonusNumber();
+	async #setBonusNumber() {
+		const bonusNumber = await this.#inputView.readBonusNumber();
 
-		this.#userLotto.setBonusNumber(Number(bonusNumber));
-		this.#calculateStatistics();
+		this.#winningLotto.setBonusNumber(Number(bonusNumber));
+		this.calculateStatistics();
 	}
 
 	calculateStatistics() {
-		const result = this.#statistics.calculateStatistics(this.#userLotto, this.#winningLotto);
-		this.printStatistics(result);
+		this.#statistics.calculateStatistics(this.#userLotto, this.#winningLotto);
+		this.printStatistics(this.#statistics.getStatistics());
 	}
 
 	printStatistics(result) {
-		this.#outputView.print();
-		this.#outputView.print()
+
+		result.forEach(statistics => {
+			this.#outputView.print(statistics.count);
+		})
+		this.#outputView.print(this.#statistics.getRateOfReturns());
 	}
 }
+
+export default controller;

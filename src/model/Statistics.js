@@ -23,21 +23,21 @@ class Statistics {
 		}
 	];
 
-	#calculateStatistics(userLotto, winningLotto) {
+	calculateStatistics(userLotto, winningLotto) {
 		const rankResult = userLotto.calculateMatchingNumber(winningLotto);
 
-		const totalWinnings = 0;
+		let totalWinnings = 0;
 	
 		this.#statistics.forEach((statistic) => {
 			statistic.count = rankResult[statistic.rank];
-			totalWinning += statistic.winnings * statistic.count;
+			totalWinnings += statistic.winnings * statistic.count;
 		});
 
-		this.#rateofreturns = totalWinning / userLotto.getPurchaseAmount();
+		this.#rateofreturns = totalWinnings / (userLotto.getPurchaseAmount() * 1000);
 	}
 
 	getRateOfReturns() {
-		return this.#rateofreturns;
+		return (this.#rateofreturns * 100).toFixed(2);
 	}
 
 	getStatistics() {
@@ -45,3 +45,5 @@ class Statistics {
 	}
 
 }
+
+export default Statistics

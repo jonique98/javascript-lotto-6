@@ -1,6 +1,8 @@
+import UserLottoNumber from './UserLottoNumber.js'
+
 class PurchaseLotto {
-	#numberOfPurchaseLotto;
-	#userLottoNumbers;
+	#numberOfPurchase;
+	#userLottoNumbers = [];
 
 	#validate(purchaseAmount) {
 		this.#typeCheck(purchaseAmount);
@@ -8,13 +10,13 @@ class PurchaseLotto {
 	}
 
 	#typeCheck(purchaseAmount) {
-		if (Number.isNaN(purchaseAmountToNumber)) {
+		if (Number.isNaN(purchaseAmount)) {
 			throw new Error("[ERROR] 구입 금액은 숫자여야 합니다.");
 		}
 	}
 
 	#divisionCheck(purchaseAmount) {
-		if (purchaseAmountToNumber % 1000 !== 0) {
+		if (purchaseAmount % 1000 !== 0) {
 			throw new Error("[ERROR] 구입 금액은 1000원 단위여야 합니다.");
 		}
 	}
@@ -43,11 +45,16 @@ class PurchaseLotto {
 			first: 0,
 		};
 
-		for(let i = 0; i < this.#numberOfPurchase; i++) {
-			const rank = this.#userLottoNumbers[i].calculateMatchingNumber(winningLotto);
+		this.#userLottoNumbers.forEach(userLottoNumber => {
+			const rank = userLottoNumber.calculateMatchingNumber(winningLotto);
 			ranking[rank] += 1;
-		}
+		})
+		
 		return ranking;
+	}
+
+	getPurchaseAmount() {
+		return this.#numberOfPurchase;
 	}
 
 }
