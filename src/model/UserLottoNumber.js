@@ -14,14 +14,14 @@ class UserLottoNumber {
 	}
 
 	calculateMatchingNumber(winningLotto) {
-		const matchingNumbers = this.#lottoNumber.filter((number) => winningLotto.getFullLottoNumbers().includes(number));
-		const bonusNumber = matchingNumbers.includes(winningLotto.getBonusNumber());
+		const matchingNumbers = this.#lottoNumber.filter((number) => winningLotto.getLottoNumber().includes(number));
+		const bonusNumber = this.#lottoNumber.includes(winningLotto.getBonusNumber());
 
-		if (matchingNumbers.length === NUMBER.three) return 'fifth';
-		if (matchingNumbers.length === NUMBER.four) return 'fourth';
-		if (matchingNumbers.length === NUMBER.five) return 'third';
-		if (matchingNumbers.length === NUMBER.five && bonusNumber) return 'second';
 		if (matchingNumbers.length === NUMBER.six) return 'first';
+		if (matchingNumbers.length === NUMBER.five && bonusNumber) return 'second';
+		if (matchingNumbers.length === NUMBER.five) return 'third';
+		if (matchingNumbers.length === NUMBER.four) return 'fourth';
+		if (matchingNumbers.length === NUMBER.three) return 'fifth';
 	}
 
 	getLottoNumber() {

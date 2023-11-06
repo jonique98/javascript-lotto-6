@@ -19,6 +19,10 @@ class Lotto {
     return this.#bonusNumber;
   }
 
+  getLottoNumber() {
+    return this.#numbers;
+  }
+
   setBonusNumber(bonusNumber) {
     this.#bonusValidate(bonusNumber);
     this.#bonusNumber = bonusNumber;
@@ -71,11 +75,6 @@ class Lotto {
       throw new Error("[ERROR] 로또 번호에 중복된 숫자가 있습니다.");
     }
   }
-
-  getLottoNumber() {
-    return this.#numbers;
-  }
-
 }
 
 export default Lotto;

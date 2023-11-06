@@ -2,10 +2,14 @@ import { STATISTICS } from '../constants/constants.js';
 
 class Statistics {
 	#rateofreturns;
-	#statistics = [];
+	#statistics ;
+
+	constructor() {
+		this.#statistics = STATISTICS;
+		this.#rateofreturns = 0;
+	}
 
 	calculateStatistics(userLotto, winningLotto) {
-		this.#statistics = STATISTICS;
 		const rankResult = userLotto.calculateMatchingNumber(winningLotto);
 
 		let totalWinnings = 0;

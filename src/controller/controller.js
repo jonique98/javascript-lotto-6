@@ -4,6 +4,7 @@ import  Statistics  from '../model/statistics.js';
 import  InputView  from '../view/InputView.js';
 import  OutputView  from '../view/OutputView.js';
 import { MESSAGE, CHARACTER } from '../constants/constants.js';
+import { Random } from '@woowacourse/mission-utils'
 
 class controller {
 	#inputView
@@ -53,6 +54,9 @@ class controller {
 			this.#outputView.print(error.message);
 			this.setWinningLottoNumbers();
 		}
+
+		// this.#winningLotto = new Lotto(Random.pickUniqueNumbersInRange(1, 45, 6));
+		// await this.#setBonusNumber();
 	}
 
 	async #setBonusNumber() {
@@ -60,6 +64,9 @@ class controller {
 
 		this.#winningLotto.setBonusNumber(Number(bonusNumber));
 		this.calculateStatistics();
+
+		// this.#winningLotto.setBonusNumber(Number(Random.pickUniqueNumbersInRange(1, 45, 1)));
+		// this.calculateStatistics();
 	}
 
 	calculateStatistics() {
