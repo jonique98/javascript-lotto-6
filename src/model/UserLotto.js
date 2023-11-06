@@ -1,11 +1,17 @@
 import UserLottoNumber from './UserLottoNumber.js'
 
 class UserLotto {
+	#purchaseAmount;
 	#numberOfPurchase;
 	#userLottoNumbers = [];
 
 	constructor(purchaseAmount) {
-		this.#calculateNumberOfPurchase(purchaseAmount);
+		try {
+			this.#validate(purchaseAmount);
+			this.#setPurchaseVariable(purchaseAmount);
+		}catch (error) {
+			throw error;
+		}
 
 		for (let i = 0; i < this.#numberOfPurchase; i++) {
 			this.#userLottoNumbers.push(new UserLottoNumber());
@@ -29,13 +35,9 @@ class UserLotto {
 		}
 	}
 
-	#calculateNumberOfPurchase(purchaseAmount) {
-		try {
-			this.#validate(purchaseAmount);
-			this.#numberOfPurchase = purchaseAmount / 1000;
-		}catch (error){
-			throw error;
-		}
+	#setPurchaseVariable(purchaseAmount) {
+		this.#purchaseAmount = purchaseAmount;
+		this.#numberOfPurchase = purchaseAmount / 1000;
 	}
 
 	calculateMatchingNumber(winningLotto) {
