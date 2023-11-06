@@ -30,11 +30,9 @@ class UserLotto {
 	}
 
 	#calculateNumberOfPurchase(purchaseAmount) {
-		const purchaseAmountToNumber = Number(purchaseAmount);
-	
 		try {
-			this.#validate(purchaseAmountToNumber);
-			this.#numberOfPurchase = purchaseAmountToNumber / 1000;
+			this.#validate(purchaseAmount);
+			this.#numberOfPurchase = purchaseAmount / 1000;
 		}catch (error){
 			throw error;
 		}

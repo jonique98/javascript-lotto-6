@@ -26,7 +26,7 @@ class controller {
 		const purchaseAmount = await this.#inputView.readPurchaseAmount();
 
 		try{
-			this.#userLotto = new UserLotto(purchaseAmount);
+			this.#userLotto = new UserLotto(Number(purchaseAmount));
 			this.priintUserLottoNumbers()
 			await this.setWinningLottoNumbers();
 		}catch (error){
@@ -47,7 +47,7 @@ class controller {
 		const lottoNumbers = await this.#inputView.readLottoNumber();
 
 		try{
-			this.#winningLotto = new Lotto(lottoNumbers);
+			this.#winningLotto = new Lotto(Array.from(lottoNumbers.split(','), Number));
 			await this.#setBonusNumber();
 		} catch (error) {
 			this.#outputView.print(error.message);
@@ -58,7 +58,7 @@ class controller {
 	async #setBonusNumber() {
 		const bonusNumber = await this.#inputView.readBonusNumber();
 
-		this.#winningLotto.setBonusNumber(bonusNumber);
+		this.#winningLotto.setBonusNumber(Number(bonusNumber));
 		this.calculateStatistics();
 	}
 
@@ -71,7 +71,7 @@ class controller {
 		result.forEach(statistics => {
 			this.#outputView.print(`${MESSAGE[statistics.rank]}${statistics.count}${CHARACTER.countsuffix}`);
 		});
-		this.#outputView.print(`${this.#statistics.getRateOfReturns()}${CHARACTER.percent}`);
+		this.#outputView.print(`총 수익률은 ${this.#statistics.getRateOfReturns()}${CHARACTER.percent}입니다.`);
 		return ;
 	}
 }

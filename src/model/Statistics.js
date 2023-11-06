@@ -19,7 +19,7 @@ class Statistics {
 	}
 
 	getRateOfReturns() {
-		return (this.#rateofreturns * 100).toFixed(2);
+		return (this.#rateofreturns * 100).toFixed(1);
 	}
 
 	getStatistics() {
