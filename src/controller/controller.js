@@ -3,6 +3,7 @@ import  Lotto   from '../model/lotto.js';
 import  Statistics  from '../model/statistics.js';
 import  InputView  from '../view/InputView.js';
 import  OutputView  from '../view/OutputView.js';
+import { MESSAGE, CHARACTER } from '../constants/constants.js';
 
 class controller {
 	#inputView
@@ -14,32 +15,50 @@ class controller {
 	constructor() {
 		this.#inputView = new InputView();
 		this.#outputView = new OutputView();
-		this.#userLotto = new UserLotto();
 		this.#statistics = new Statistics();
 	}
 
-	init() {
-		this.buyLotto();
+	async init() {
+		await this.buyLotto();
 	}
 
 	async buyLotto() {
 		const purchaseAmount = await this.#inputView.readPurchaseAmount();
 
-		this.#userLotto.buyLotto(purchaseAmount);
-		this.setWinningLottoNumbers();
+		try{
+			this.#userLotto = new UserLotto(purchaseAmount);
+			this.priintUserLottoNumbers()
+			await this.setWinningLottoNumbers();
+		}catch (error){
+			this.#outputView.print(error.message);
+			this.buyLotto();
+		}
+	}
+
+	priintUserLottoNumbers() {
+		this.#outputView.print(this.#userLotto.getNumberOfPurchase() + "개를 구매했습니다.");
+		this.#userLotto.getUserLottoNumbers().forEach(userLottoNumber => {
+			const message = userLottoNumber.getLottoNumber().join(`, `);
+			this.#outputView.print(`[${message}]`);
+		});
 	}
 
 	async setWinningLottoNumbers() {
 		const lottoNumbers = await this.#inputView.readLottoNumber();
 
-		this.#winningLotto = new Lotto(lottoNumbers);
-		this.#setBonusNumber();
+		try{
+			this.#winningLotto = new Lotto(lottoNumbers);
+			await this.#setBonusNumber();
+		} catch (error) {
+			this.#outputView.print(error.message);
+			this.setWinningLottoNumbers();
+		}
 	}
 
 	async #setBonusNumber() {
 		const bonusNumber = await this.#inputView.readBonusNumber();
 
-		this.#winningLotto.setBonusNumber(Number(bonusNumber));
+		this.#winningLotto.setBonusNumber(bonusNumber);
 		this.calculateStatistics();
 	}
 
@@ -49,11 +68,11 @@ class controller {
 	}
 
 	printStatistics(result) {
-
 		result.forEach(statistics => {
-			this.#outputView.print(statistics.count);
-		})
-		this.#outputView.print(this.#statistics.getRateOfReturns());
+			this.#outputView.print(`${MESSAGE[statistics.rank]}${statistics.count}${CHARACTER.countsuffix}`);
+		});
+		this.#outputView.print(`${this.#statistics.getRateOfReturns()}${CHARACTER.percent}`);
+		return ;
 	}
 }
 

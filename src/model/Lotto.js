@@ -3,8 +3,12 @@ class Lotto {
   #bonusNumber;
 
   constructor(numbers) {
-    this.#validate(numbers);
-    this.#numbers = Array.from(numbers.split(','), Number);
+    try{
+      this.#validate(numbers);
+      this.#numbers = Array.from(numbers.split(','), Number);
+    }catch (error){
+      throw error;
+    }
   }
 
   getFullLottoNumbers(){
@@ -16,8 +20,10 @@ class Lotto {
   }
 
   setBonusNumber(bonusNumber) {
-    this.#bonusValidate(bonusNumber);
-    this.#bonusNumber = bonusNumber;
+    const bonusNumberToNumber = Number(bonusNumber);
+  
+    this.#bonusValidate(bonusNumberToNumber);
+    this.#bonusNumber = bonusNumberToNumber;
   }
 
   #bonusValidate(bonusNumber) {
@@ -34,7 +40,7 @@ class Lotto {
 
   #validate(numbers) {
     const numbersToArray = Array.from(numbers.split(','), Number);
-  
+    
     this.#numberLengthCheck(numbersToArray);
     this.#numberTypeCheck(numbersToArray);
     this.#numberRangeCheck(numbersToArray);

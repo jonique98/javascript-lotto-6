@@ -1,4 +1,5 @@
 import { Random } from '@woowacourse/mission-utils'
+import { NUMBER } from '../constants/constants.js'
 
 class UserLottoNumber {
 	#lottoNumber;
@@ -16,11 +17,15 @@ class UserLottoNumber {
 		const matchingNumbers = this.#lottoNumber.filter((number) => winningLotto.getFullLottoNumbers().includes(number));
 		const bonusNumber = matchingNumbers.includes(winningLotto.getBonusNumber());
 
-		if (matchingNumbers.length === 3) return 'fifth';
-		if (matchingNumbers.length === 4) return 'fourth';
-		if (matchingNumbers.length === 5) return 'third';
-		if (matchingNumbers.length === 5 && bonusNumber) return 'second';
-		if (matchingNumbers.length === 6) return 'first';
+		if (matchingNumbers.length === NUMBER.three) return 'fifth';
+		if (matchingNumbers.length === NUMBER.four) return 'fourth';
+		if (matchingNumbers.length === NUMBER.five) return 'third';
+		if (matchingNumbers.length === NUMBER.five && bonusNumber) return 'second';
+		if (matchingNumbers.length === NUMBER.six) return 'first';
+	}
+
+	getLottoNumber() {
+		return this.#lottoNumber;
 	}
 }
 

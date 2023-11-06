@@ -1,29 +1,11 @@
+import { STATISTICS } from '../constants/constants.js';
+
 class Statistics {
 	#rateofreturns;
-	#statistics = [
-		{ rank: 'fifth',
-			winnings : 5000,
-			count: 0 
-		},
-		{ rank: 'fourth',
-			winnings : 50000,
-			count: 0 
-		},
-		{ rank: 'third',
-			winnings : 1500000,
-			count: 0 
-		},
-		{ rank: 'second',
-			winnings : 30000000,
-			count: 0 
-		},
-		{ rank: 'first',
-			winnings : 2000000000,
-			count: 0 
-		}
-	];
+	#statistics = [];
 
 	calculateStatistics(userLotto, winningLotto) {
+		this.#statistics = STATISTICS;
 		const rankResult = userLotto.calculateMatchingNumber(winningLotto);
 
 		let totalWinnings = 0;
@@ -33,7 +15,7 @@ class Statistics {
 			totalWinnings += statistic.winnings * statistic.count;
 		});
 
-		this.#rateofreturns = totalWinnings / (userLotto.getPurchaseAmount() * 1000);
+		this.#rateofreturns = totalWinnings / (userLotto.getNumberOfPurchase() * 1000);
 	}
 
 	getRateOfReturns() {
